@@ -21,6 +21,8 @@ public class AsynchRequest extends AsyncTask<String, String, String> {
         Request.Builder builder = new Request.Builder()
                 .url(params[1]).post(RequestBody.create(MediaType.parse(params[2]),params[0]));
 
+        //-----Uncomment to make serialization task-----
+        builder.addHeader("Content-Type","application/json");
         //-----Uncomment to make compression task-------
         //builder.addHeader("Network", "CSD");
         //builder.addHeader("X-Content-Encoding", "deflate");
@@ -50,6 +52,7 @@ public class AsynchRequest extends AsyncTask<String, String, String> {
     protected  void onPostExecute(String s){
         super.onPostExecute(s);
         communicationEventListener.handleServerResponse(s);
+
     }
 
 }

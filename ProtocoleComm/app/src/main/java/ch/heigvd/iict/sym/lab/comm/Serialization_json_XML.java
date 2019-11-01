@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import static java.sql.DriverManager.println;
+
 public class Serialization_json_XML extends AppCompatActivity implements View.OnClickListener {
 
     private User user;
@@ -61,12 +63,14 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
         asynchHandler.setCommunicationEventListener(new CommunicationEventListener() {
             @Override
             public boolean handleServerResponse(String response){
+                println(response);
                 verifyServerResponse(response);
                 editTextResponse.setVisibility(View.VISIBLE);
                 editTextResponse.setText(response);
                 return false;
             }
         });
+
         asynchHandler.execute(request, url, "text/plain");
     }
 }
