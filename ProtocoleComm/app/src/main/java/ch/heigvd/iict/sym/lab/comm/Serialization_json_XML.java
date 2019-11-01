@@ -1,12 +1,12 @@
 package ch.heigvd.iict.sym.lab.comm;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,6 +21,7 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
     private Button buttonLogin;
 
     private final Gson gson = new GsonBuilder().create();
+
     private final String SERVER_URL =  "http://sym.iict.ch/rest/json";
 
     @Override
@@ -60,10 +61,12 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
 
     public void sendRequest(String request, String url){
         final AsynchRequest asynchHandler = new AsynchRequest();
+
         asynchHandler.setCommunicationEventListener(new CommunicationEventListener() {
             @Override
-            public boolean handleServerResponse(String response){
+            public boolean handleServerResponse(String response) {
                 println(response);
+
                 verifyServerResponse(response);
                 editTextResponse.setVisibility(View.VISIBLE);
                 editTextResponse.setText(response);
