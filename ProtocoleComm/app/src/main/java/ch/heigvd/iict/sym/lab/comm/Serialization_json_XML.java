@@ -1,6 +1,7 @@
 package ch.heigvd.iict.sym.lab.comm;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,7 +66,6 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
         asynchHandler.setCommunicationEventListener(new CommunicationEventListener() {
             @Override
             public boolean handleServerResponse(String response) {
-                println(response);
 
                 verifyServerResponse(response);
                 editTextResponse.setVisibility(View.VISIBLE);
