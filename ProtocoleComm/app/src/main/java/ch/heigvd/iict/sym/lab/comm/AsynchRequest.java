@@ -14,6 +14,7 @@ public class AsynchRequest extends AsyncTask<String, String, String> {
     OkHttpClient client = new OkHttpClient();
 
     public AsynchRequest(){
+
     }
 
     @Override

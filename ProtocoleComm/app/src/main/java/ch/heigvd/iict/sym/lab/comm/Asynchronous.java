@@ -19,11 +19,11 @@ public class Asynchronous extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_asynchronous);
         this.asynch_activity.setTitle("Asynchronous");
-        this.asyncSend = findViewById(R.id.asyncSend);
+        this.asyncSend = findViewById(R.id.button_send_text);
 
         asyncSend.setOnClickListener((v) -> {
             try {
-                sysCommMan.sendRequest("test edualc", "http://sym.iict.ch/");
+                sysCommMan.sendRequest("test edualc", "http://sym.iict.ch/rest/txt");
             } catch (Exception e) {
                 System.out.println(e);
             }
