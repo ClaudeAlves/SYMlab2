@@ -62,7 +62,7 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
 
     public void sendRequest(String request, String url){
         final AsynchRequest asynchHandler = new AsynchRequest();
-        
+
         asynchHandler.setCommunicationEventListener(new CommunicationEventListener() {
             @Override
             public boolean handleServerResponse(String response) {
