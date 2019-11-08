@@ -23,10 +23,10 @@ public class AsynchRequest extends AsyncTask<String, String, String> {
                 .url(params[1]).post(RequestBody.create(MediaType.parse(params[2]),params[0]));
 
         //-----Uncomment to make serialization task-----
-        builder.addHeader("Content-Type","application/json");
+        //builder.addHeader("Content-Type","application/json");
         //-----Uncomment to make compression task-------
-        //builder.addHeader("Network", "CSD");
-        //builder.addHeader("X-Content-Encoding", "deflate");
+        builder.addHeader("Network", "CSD");
+        builder.addHeader("X-Content-Encoding", "deflate");
         //----------------------------------------------
 
         Request request=builder.build();
