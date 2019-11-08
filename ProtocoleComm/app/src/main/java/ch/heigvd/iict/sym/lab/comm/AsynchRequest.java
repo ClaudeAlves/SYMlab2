@@ -53,7 +53,5 @@ public class AsynchRequest extends AsyncTask<String, String, String> {
     protected  void onPostExecute(String s){
         super.onPostExecute(s);
         communicationEventListener.handleServerResponse(s);
-
     }
-
 }

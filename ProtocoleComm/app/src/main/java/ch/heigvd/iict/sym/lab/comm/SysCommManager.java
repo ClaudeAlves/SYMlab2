@@ -15,16 +15,17 @@ import okhttp3.Response;
 
 public class SysCommManager extends AsyncTask<String, String, String> {
     private OkHttpClient client = new OkHttpClient();
+    CommunicationEventListener communicationEventListener;
 
 
-    public void sendRequest(String request, String url) throws Exception {
-        String params[] = {request, url, "text/plain"};
+    public void sendRequest(String request, String url, String accept) throws Exception {
+        String params[] = {request, url, accept};
         execute(params);
     }
 
 
     public void setCommunicationEventListener (CommunicationEventListener l) {
-
+        this.communicationEventListener = l;
     }
 
     @Override
@@ -33,13 +34,7 @@ public class SysCommManager extends AsyncTask<String, String, String> {
         Request.Builder builder = new Request.Builder()
                 .url(params[1]).post(RequestBody.create(MediaType.parse(params[2]),params[0]));
 
-
-        //-----Uncomment to make serialization task-----
         builder.addHeader("Content-Type","test/plain");
-        //-----Uncomment to make compression task-------
-        //builder.addHeader("Network", "CSD");
-        //builder.addHeader("X-Content-Encoding", "deflate");
-        //----------------------------------------------
 
         Request request = builder.build();
         try{
@@ -49,6 +44,17 @@ public class SysCommManager extends AsyncTask<String, String, String> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    protected  void onPreExecute(){
+        super.onPreExecute();
+    }
+
+    @Override
+    protected  void onPostExecute(String s){
+        super.onPostExecute(s);
+        communicationEventListener.handleServerResponse(s);
     }
 
 }

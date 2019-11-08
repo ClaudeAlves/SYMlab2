@@ -63,7 +63,6 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
         final AsynchRequest asynchHandler = new AsynchRequest();
 
         asynchHandler.setCommunicationEventListener(response -> {
-            println(response);
             verifyServerResponse(response);
             editTextResponse.setVisibility(View.VISIBLE);
             editTextResponse.setText(response);
