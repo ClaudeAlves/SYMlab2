@@ -3,9 +3,6 @@ package ch.heigvd.iict.sym.lab.comm;
 import android.os.AsyncTask;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -30,11 +27,10 @@ public class SysCommManager extends AsyncTask<String, String, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        System.out.println("Passe par la \n");
         Request.Builder builder = new Request.Builder()
                 .url(params[1]).post(RequestBody.create(MediaType.parse(params[2]),params[0]));
 
-        builder.addHeader("Content-Type","test/plain");
+        builder.addHeader("Content-Type",params[2]);
 
         Request request = builder.build();
         try{

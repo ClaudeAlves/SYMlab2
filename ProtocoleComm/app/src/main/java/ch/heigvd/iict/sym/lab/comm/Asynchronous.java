@@ -8,14 +8,15 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class Asynchronous extends AppCompatActivity {
 
+    private final String URL = "http://sym.iict.ch/rest/txt";
+    private final String TYPE = "text/plain";
+
     final Activity asynch_activity = this;
     private Button asyncSend = null;
-    private EditText toSend = null;
-    private EditText textResponse = null;
+    private EditText toSend = null, textResponse = null;
     private SysCommManager sysCommMan = null;
 
     @Override
@@ -27,25 +28,20 @@ public class Asynchronous extends AppCompatActivity {
         this.toSend = findViewById(R.id.toSend);
         this.textResponse = findViewById(R.id.serverResponse);
 
-
         asyncSend.setOnClickListener((v) -> {
             sysCommMan = new SysCommManager();
 
-            sysCommMan.setCommunicationEventListener(new CommunicationEventListener() {
-                @Override
-                public boolean handleServerResponse(String response) {
-                    textResponse.setText(response);
-                    return true;
-                }
+            sysCommMan.setCommunicationEventListener(response -> {
+                textResponse.setText(response);
+                return true;
             });
 
             try {
-                sysCommMan.sendRequest(toSend.getText().toString(), "http://sym.iict.ch/rest/txt", "text/plain");
+                sysCommMan.sendRequest(toSend.getText().toString(), URL, TYPE);
             } catch (Exception e) {
                 System.out.println(e);
             }
         });
-
     }
 
 
