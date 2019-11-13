@@ -31,12 +31,12 @@ public class Compressed extends AppCompatActivity implements View.OnClickListene
 
     private final Gson gson = new GsonBuilder().create();
 
-    private final String SERVER_URL =  "http://sym.iict.ch/rest/txt";
+    private final String SERVER_URL =  "http://sym.iict.ch/rest/json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_serialization_json__xml);
+        setContentView(R.layout.activity_compressed);
 
         //Binding the components with the view
         editTextUsername = findViewById(R.id.editTextUsername);
@@ -121,25 +121,22 @@ public class Compressed extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void sendRequest(String request,String url){
+    public void sendRequest(String request, String url) {
+        final SysCommManager asynchHandler = new SysCommManager();
 
-        final AsynchRequest asyncHandler=new AsynchRequest();
+        asynchHandler.setCommunicationEventListener(response -> {
 
-        asyncHandler.setCommunicationEventListener(new CommunicationEventListener() {
-
-            @Override
-            public boolean handleServerResponse(String response) {
-
-                try {
-                    verifyServerResponse(response);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                editTextResponse.setVisibility(View.VISIBLE);
-                editTextResponse.setText(response);
-                return true;
+            try {
+                verifyServerResponse(response);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            editTextResponse.setVisibility(View.VISIBLE);
+            editTextResponse.setText(response);
+
+            return true;
         });
-        asyncHandler.execute(request,url, "text/plain");
+        asynchHandler.execute(request, url, "application/json");
+
     }
 }

@@ -9,31 +9,74 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Username"/>
+            android:text="Firstname" />
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editTextUsername" />
+            android:id="@+id/editTextFirstname" />
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Password"/>
+            android:text="Lastname" />
+
         <EditText
-            android:layout_width="fill_parent"
+            android:id="@+id/editTextLastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:id="@+id/editTextPassword" />
+            android:text="Middlename" />
+
+        <EditText
+            android:id="@+id/editTextMiddlename"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gender" />
+
+        <EditText
+            android:id="@+id/editTextGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone number" />
+
+        <EditText
+            android:id="@+id/editTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <Button
+            android:id="@+id/buttonLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="login"
-            android:id="@+id/buttonLogin"
             android:layout_marginLeft="14dp"
+            android:layout_marginTop="35dp"
             android:layout_marginRight="14dp"
-            android:layout_marginTop="35dp"/>
+            android:text="JSON" />
+
+        <Button
+            android:id="@+id/buttonXML"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="14dp"
+            android:text="XML" />
+
         <EditText
             android:id="@+id/editTextResponse"
             android:layout_width="match_parent"
