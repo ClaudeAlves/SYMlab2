@@ -1,3 +1,9 @@
+/**
+ * @author Claude-André Alves, Catel Torres Arzur Gabriel, Thomas Benjamin
+ *
+ * @about class qui permet de faire des requêtes sur un serveur grâce à la méthode sendRequest qui
+ *          prend en paramètre la requête l'url ansi que le type d'acceptation.
+ */
 package ch.heigvd.iict.sym.lab.comm;
 
 import android.os.AsyncTask;

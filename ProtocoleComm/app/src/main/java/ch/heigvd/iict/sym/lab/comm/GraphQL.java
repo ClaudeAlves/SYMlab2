@@ -1,3 +1,9 @@
+/**
+ * @author Claude-André Alves, Catel Torres Arzur Gabriel, Thomas Benjamin
+ *
+ * @about Cette classe permet de communiquer avec le serveur afin de pouvoir afficher les articles
+ *          de l'auteur séléctionné.
+ */
 package ch.heigvd.iict.sym.lab.comm;
 
 import androidx.appcompat.app.AppCompatActivity;

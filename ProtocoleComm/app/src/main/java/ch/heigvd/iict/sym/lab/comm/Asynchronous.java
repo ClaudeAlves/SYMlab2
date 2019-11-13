@@ -1,3 +1,9 @@
+/**
+ * @author Claude-André Alves, Catel Torres Arzur Gabriel, Thomas Benjamin
+ *
+ * @about Cette classe permet l'envoi asynchrone d'un message textuel au serveur qui réside à
+ *          l'adresse http://sym.iict.ch/rest/txt.
+ */
 package ch.heigvd.iict.sym.lab.comm;
 
 import androidx.appcompat.app.AppCompatActivity;
