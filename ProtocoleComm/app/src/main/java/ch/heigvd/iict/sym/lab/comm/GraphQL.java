@@ -1,14 +1,23 @@
+/**
+ * @author Claude-André Alves, Catel Torres Arzur Gabriel, Thomas Benjamin
+ *
+ * @about Cette classe permet de communiquer avec le serveur afin de pouvoir afficher les articles
+ *          de l'auteur séléctionné.
+ */
 package ch.heigvd.iict.sym.lab.comm;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -42,6 +51,7 @@ public class GraphQL extends AppCompatActivity {
         setContentView(R.layout.activity_graph_ql);
         this.spinner = findViewById(R.id.GraphQlSpinner);
         GraphQlActivity.setTitle("GraphQL");
+        verticalLayout = findViewById(R.id.GraphQlTextViews);
 
         GenerateAuthorList();
 
@@ -94,11 +104,11 @@ public class GraphQL extends AppCompatActivity {
 
         sysCommManager.setCommunicationEventListener(response -> {
 
+            Log.println(Log.INFO,"GraphQLAuteur",response);
             try {
                 JSONArray postsArray = new JSONObject(response).getJSONObject("data").getJSONObject("author").getJSONArray("posts");
                 JSONObject post;
                 int size = postsArray.length();
-                System.out.println(postList.size());
                 for(int i = 0; i < size; i++ ) {
                     post = postsArray.getJSONObject(i);
                     postList.add(new Post(
@@ -106,6 +116,8 @@ public class GraphQL extends AppCompatActivity {
                             post.getString("content"))
                     );
                 }
+                putPostListIntoLayout(postList);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -113,23 +125,25 @@ public class GraphQL extends AppCompatActivity {
         });
         try {
             sysCommManager.sendRequest(String.format(GETALLPOSTSREQUEST, authorID), URL, TYPE);
-            System.out.println("OLA");
-            putPostListIntoLayout(postList);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void putPostListIntoLayout(List<Post> postList) {
-        verticalLayout = new LinearLayout(this);
+        verticalLayout.removeAllViews();
         verticalLayout.setOrientation(LinearLayout.VERTICAL);
-
+        ScrollView scroller;
+        TextView content;
         for(Post p : postList) {
-            TextView content = new TextView(this);
-
+            content = new TextView(this);
+            scroller = new ScrollView(this);
             content.setText(p.toString());
-            System.out.println(p.toString());
-            verticalLayout.addView(content);
+            content.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            scroller.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+
+            scroller.addView(content);
+            verticalLayout.addView(scroller);
         }
     }
     private class Author {
