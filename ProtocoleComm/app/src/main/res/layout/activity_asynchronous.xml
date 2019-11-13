@@ -19,14 +19,14 @@
             android:text="To send :" />
 
         <EditText
-            android:id="@+id/toSend"
+            android:id="@+id/asyncToSend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName" />
 
         <Button
-            android:id="@+id/button_send_text"
+            android:id="@+id/asyncSend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Send" />
@@ -37,7 +37,7 @@
             android:text="Response :" />
 
         <EditText
-            android:id="@+id/serverResponse"
+            android:id="@+id/asyncResponse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
