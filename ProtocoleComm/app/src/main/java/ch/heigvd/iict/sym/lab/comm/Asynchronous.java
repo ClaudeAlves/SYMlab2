@@ -14,7 +14,7 @@ public class Asynchronous extends AppCompatActivity {
     private final String URL = "http://sym.iict.ch/rest/txt";
     private final String TYPE = "text/plain";
 
-    final Activity asynch_activity = this;
+    final Activity asynchActivity = this;
     private Button asyncSend = null;
     private EditText toSend = null, textResponse = null;
     private SysCommManager sysCommMan = null;
@@ -23,10 +23,10 @@ public class Asynchronous extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_asynchronous);
-        this.asynch_activity.setTitle("Asynchronous");
-        this.asyncSend = findViewById(R.id.button_send_text);
-        this.toSend = findViewById(R.id.toSend);
-        this.textResponse = findViewById(R.id.serverResponse);
+        this.asynchActivity.setTitle("Asynchronous");
+        this.asyncSend = findViewById(R.id.asyncSend);
+        this.toSend = findViewById(R.id.asyncToSend);
+        this.textResponse = findViewById(R.id.asyncResponse);
 
         asyncSend.setOnClickListener((v) -> {
             sysCommMan = new SysCommManager();

@@ -30,10 +30,10 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
 
         //Binding the components with the view
         editTextUsername = findViewById(R.id.editTextUsername);
-        editTextPassword=findViewById(R.id.editTextPassword);
-        editTextResponse=findViewById(R.id.editTextResponse);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        editTextResponse = findViewById(R.id.editTextResponse);
 
-        buttonLogin=findViewById(R.id.buttonLogin);
+        buttonLogin = findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(this);
     }
 
@@ -59,7 +59,7 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
     }
 
     public void sendRequest(String request, String url){
-        final AsynchRequest asynchHandler = new AsynchRequest();
+        final SysCommManager asynchHandler = new SysCommManager();
 
         asynchHandler.setCommunicationEventListener(response -> {
             verifyServerResponse(response);
@@ -67,8 +67,7 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
             editTextResponse.setText(response);
             return true;
         });
-
-        asynchHandler.execute(request, url, "text/plain");
+        asynchHandler.execute(request, url, "application/json");
     }
 }
 
