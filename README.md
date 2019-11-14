@@ -99,11 +99,12 @@ Les messages sont sérialisés sous un format binaire compact, donc contrairemen
 points qui pourraient être améliorés pour une utilisation mobile ? Veuillez en discuter, vous
 pouvez élargir votre réflexion à une problématique plus large que la manipulation effectuée.</u>*
 
+/* A COMPLETEEEEEEEEEEEEEEEER */
 
 
-
-
-
+## 4.6 Transmission compressée
+*<u>Quel gain peut-on constater en moyenne sur des fichiers texte (xml et json sont aussi du texte) en
+utilisant de la compression du point 3.4 ? Vous comparerez plusieurs tailles et types de contenu.</u>*
 
 
 
