@@ -27,3 +27,21 @@ Enfin pour le cas d'une transmission différée, il est compliqué de gérer le 
 préoccupent de la préparation, de l'envoi, de la réception et du traitement des données. Quels
 problèmes cela peut-il poser ?</u>*
 
+Il peut y avoir plusieurs problèmes qui seront tous liés à la coordination des threads.
+Par exemple un thread qui envoie trop de requêtes peut remplir le buffer de celui qui reçoit (qui est peut-être actuellement en train de traiter autre chose). Le thread qui envoie continue d'envoyer des requêtes mais elles seront ignorées par le thread qui reçoit. Malgré tout la coordination passe par les réponses aussi, si le thread qui envoie une requête ne reçoit pas de réponse il doit considérer qu'elle n'a pas été traitée.
+Il faut toujours veiller à ce que les étapes soient effectuées dans le bon ordre, notamment dans le cas d'une authentification. Le client doit bien attendre la réponse du serveur qui valide bien son athentification avant d'envoyer la requête.
+Comme toujours lors des programmes asynchrones, il est possible que le thread qui traite les données soit en train de traiter des données et que ce traitement soit plus long que le temps pour envoyer les données. Ainsi s'il y a un envoi constant de requêtes, la reception sera tardive et si le client a un timeout concernant le retour de la réponse (et que ce timeout est passé), il va (suivant l'implémentation) renvoyer la requête et celle-ci sera traitée deux fois.
+Enfin il peut aussi y avoir un problème concernant l'accès aux sections critiques comme dans tout programme concurrentiel. Il faut faire attention à bien protéger les variables lorsque c'est nécessaire pour éviter des problèmes (mais en général ce n'est pas vraiment problématique dans la gestion).
+
+
+
+
+
+
+
+
+
+
+
+
+
