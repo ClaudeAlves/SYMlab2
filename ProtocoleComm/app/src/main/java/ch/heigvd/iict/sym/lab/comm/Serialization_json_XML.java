@@ -70,16 +70,16 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
         if(view == buttonLogin){
             person = new Person(editTextFirstname.getText().toString(), editTextLastname.getText().toString(), editTextMiddlename.getText().toString(), editTextGender.getText().toString(), editTextPhone.getText().toString());
             String serializedPerson = gson.toJson(person);
-            sendRequest(serializedPerson, SERVER_URL_JSON);
+            sendRequest(serializedPerson, SERVER_URL_JSON, false);
         }else if(view == buttonXML){
             String xmlToSend = prepareXML();
-            sendRequest(xmlToSend, SERVER_URL_XML);
+            sendRequest(xmlToSend, SERVER_URL_XML, true);
         }
     }
 
     public boolean verifyServerResponse(String response){
-        String tmp = prepareXML();                                          //Comment to make JSON serialization work
-        //Person tmp = gson.fromJson(response, Person.class);               //Uncomment to make JSON serialization work
+        //String tmp = prepareXML();                                          //Comment to make JSON serialization work
+        Person tmp = gson.fromJson(response, Person.class);               //Uncomment to make JSON serialization work
 
                                                                            //Comment to make JSON serialization work
         if(tmp.equals(person)){                                          //Uncomment to make JSON serialization work
@@ -160,7 +160,7 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
         return xmlToSend;
     }
 
-    public void sendRequest(String request, String url){
+    public void sendRequest(String request, String url, boolean typeTransmisssion){
         final SysCommManager asynchHandler = new SysCommManager();
 
         asynchHandler.setCommunicationEventListener(response -> {
@@ -172,8 +172,12 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
 
             return true;
         });
-        //asynchHandler.execute(request, url, "application/json");      //Uncomment to make JSON serialization work
-        asynchHandler.execute(request, url, "application/xml");         //Comment to make JSON serialization work
+
+        if(typeTransmisssion){
+            asynchHandler.execute(request, url, "application/xml");
+        }else {
+            asynchHandler.execute(request, url, "application/json");
+        }
     }
 }
 
