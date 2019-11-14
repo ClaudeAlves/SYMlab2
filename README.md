@@ -107,6 +107,8 @@ Aussi si les champs de la base de données venaient à changer, nous serions dan
 *<u>Quel gain peut-on constater en moyenne sur des fichiers texte (xml et json sont aussi du texte) en
 utilisant de la compression du point 3.4 ? Vous comparerez plusieurs tailles et types de contenu.</u>*
 
+La compression permet d'augmenter les performences de traitements exponentiellement avec la quantité de données à traiter. En effet, pour une grande quantité de donnée, nous pourrons réduire le temps de traitement jusqu'à 50% facilement. 
+Les algorithmes de compressions ne sont donc pas forcément performents sur de petites quantités de données mais peuvent s'avérer bénéfique lorsque le volume de donnée à transmettre augmente.
 
 
 
