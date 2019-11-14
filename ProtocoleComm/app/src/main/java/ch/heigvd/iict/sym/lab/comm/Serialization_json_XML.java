@@ -36,7 +36,7 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
     private Person person;
 
     private EditText editTextFirstname, editTextLastname, editTextResponse, editTextPhone, editTextGender, editTextMiddlename;
-    private Button buttonLogin, buttonXML;
+    private Button buttonJSON, buttonXML;
 
     private final String SERVER_URL_JSON =  "http://sym.iict.ch/rest/json";
     private final String SERVER_URL_XML =  "http://sym.iict.ch/rest/xml";
@@ -61,15 +61,15 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
         editTextResponse = findViewById(R.id.editTextResponse);
 
         buttonXML = findViewById(R.id.buttonXML);
-        buttonLogin = findViewById(R.id.buttonLogin);
+        buttonJSON = findViewById(R.id.buttonJSON);
 
         buttonXML.setOnClickListener(this);
-        buttonLogin.setOnClickListener(this);
+        buttonJSON.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if(view == buttonLogin){
+        if(view == buttonJSON){
             person = new Person(editTextFirstname.getText().toString(), editTextLastname.getText().toString(), editTextMiddlename.getText().toString(), editTextGender.getText().toString(), editTextPhone.getText().toString());
             String serializedPerson = gson.toJson(person);
             sendRequest(serializedPerson, SERVER_URL_JSON, false);
@@ -168,10 +168,8 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
         });
 
         if(typeTransmisssion){
-            typeTransmisssion = true;
             asynchHandler.execute(request, url, "application/xml");
         }else {
-            typeTransmisssion = false;
             asynchHandler.execute(request, url, "application/json");
         }
     }

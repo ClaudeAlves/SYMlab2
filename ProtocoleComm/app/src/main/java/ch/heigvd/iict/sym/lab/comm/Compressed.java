@@ -22,6 +22,8 @@ import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
+import okhttp3.MediaType;
+
 import static android.os.FileUtils.copy;
 
 public class Compressed extends AppCompatActivity implements View.OnClickListener {
