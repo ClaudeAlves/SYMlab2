@@ -41,6 +41,8 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
     private final String SERVER_URL_JSON =  "http://sym.iict.ch/rest/json";
     private final String SERVER_URL_XML =  "http://sym.iict.ch/rest/xml";
 
+    private boolean typeransmission = false; //true = XML, false = JSON
+
 
     private final Gson gson = new GsonBuilder().create();
 
@@ -78,15 +80,12 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
     }
 
     public boolean verifyServerResponse(String response){
-        //String tmp = prepareXML();                                          //Comment to make JSON serialization work
-        Person tmp = gson.fromJson(response, Person.class);               //Uncomment to make JSON serialization work
 
-                                                                           //Comment to make JSON serialization work
-        if(tmp.equals(person)){                                          //Uncomment to make JSON serialization work
+        if(!response.substring(0, 4).equals("Error")){
             Toast.makeText(getApplicationContext(),"Serialization is finished: success",Toast.LENGTH_LONG).show();
             return true;
         }else{
-            Toast.makeText(getApplicationContext(),"Serialization is finished: failure",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Serialization is finished: failure " + "(" + response + ")",Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -114,23 +113,18 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
 
             Element elName = document.createElement("name");
             elName.setTextContent(editTextFirstname.getText().toString());
-            elName.setTextContent("malcolm");
 
             Element elFirstName  = document.createElement("firstname");
             elFirstName.setTextContent(editTextLastname.getText().toString());
-            elFirstName.setTextContent("malcolm");
 
             Element elMiddleName = document.createElement("middlename");
             elFirstName.setTextContent(editTextMiddlename.getText().toString());
-            elMiddleName.setTextContent("malcolm");
 
             Element elGender = document.createElement("gender");
             elFirstName.setTextContent(editTextGender.getText().toString());
-            elGender.setTextContent("Mf");
 
             Element elPhone = document.createElement("phone");
             elPhone.setTextContent(editTextPhone.getText().toString());
-            elPhone.setTextContent("07900000000");
             elPhone.setAttribute("type","mobile");
 
             document.appendChild(elDirectory);
@@ -174,8 +168,10 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
         });
 
         if(typeTransmisssion){
+            typeTransmisssion = true;
             asynchHandler.execute(request, url, "application/xml");
         }else {
+            typeTransmisssion = false;
             asynchHandler.execute(request, url, "application/json");
         }
     }

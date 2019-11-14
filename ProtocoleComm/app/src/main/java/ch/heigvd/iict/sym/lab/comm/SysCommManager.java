@@ -37,9 +37,9 @@ public class SysCommManager extends AsyncTask<String, String, String> {
                 .url(params[1]).post(RequestBody.create(MediaType.parse(params[2]),params[0]));
 
          //-----Uncomment to make compression task-------
-        builder.addHeader("X-Network", "CSD");
-        builder.addHeader("X-Content-Encoding", "deflate");
-        builder.addHeader("Accept", "text/plain");
+        //builder.addHeader("X-Network", "CSD");
+        //builder.addHeader("X-Content-Encoding", "deflate");
+        //builder.addHeader("Accept", "text/plain");
         //----------------------------------------------
         builder.addHeader("Content-Type",params[2]);
 
@@ -47,7 +47,26 @@ public class SysCommManager extends AsyncTask<String, String, String> {
         Request request = builder.build();
         try{
             Response response = client.newCall(request).execute();
-            return response.body().string();
+            int statusCode = response.code();
+            switch(statusCode) {
+                case 200:
+                    return response.body().string();
+                case 400:
+                    return "Error 400 - Bad request";
+                case 401:
+                    return "Error 401 - Unauthorized request";
+                case 404:
+                    return "Error 404 - Not found";
+                case 500:
+                    return "Error 500 - Error server";
+                case 503:
+                    return "Error 503 - Error server";
+                case 504:
+                    return "Error 504 - Server not responding";
+                default:
+                    return "Error " + statusCode + " - Error unknown";
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
