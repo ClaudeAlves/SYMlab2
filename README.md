@@ -99,7 +99,8 @@ Les messages sont sérialisés sous un format binaire compact, donc contrairemen
 points qui pourraient être améliorés pour une utilisation mobile ? Veuillez en discuter, vous
 pouvez élargir votre réflexion à une problématique plus large que la manipulation effectuée.</u>*
 
-/* A COMPLETEEEEEEEEEEEEEEEER */
+Lorsque l'on fait une requête on doit attendre d'avoir toutes les données pour pouvoir les affichées de notre programmes. Des requêtes qui permettraient l'aquisition d'une plus petite partie des données (pagination) pourrait être intéressante et rendrait l'application plus réactive.
+Aussi si les champs de la base de données venaient à changer, nous serions dans l'incapacité de pouvoir intéragir avec celle-ci. Un système de d'update des requête utilisables ou une utilisation de requêtes GET pourrait palier à ce soucis.
 
 
 ## 4.6 Transmission compressée
