@@ -29,11 +29,75 @@ problèmes cela peut-il poser ?</u>*
 
 Il peut y avoir plusieurs problèmes qui seront tous liés à la coordination des threads.
 Par exemple un thread qui envoie trop de requêtes peut remplir le buffer de celui qui reçoit (qui est peut-être actuellement en train de traiter autre chose). Le thread qui envoie continue d'envoyer des requêtes mais elles seront ignorées par le thread qui reçoit. Malgré tout la coordination passe par les réponses aussi, si le thread qui envoie une requête ne reçoit pas de réponse il doit considérer qu'elle n'a pas été traitée.
+
 Il faut toujours veiller à ce que les étapes soient effectuées dans le bon ordre, notamment dans le cas d'une authentification. Le client doit bien attendre la réponse du serveur qui valide bien son athentification avant d'envoyer la requête.
+
 Comme toujours lors des programmes asynchrones, il est possible que le thread qui traite les données soit en train de traiter des données et que ce traitement soit plus long que le temps pour envoyer les données. Ainsi s'il y a un envoi constant de requêtes, la reception sera tardive et si le client a un timeout concernant le retour de la réponse (et que ce timeout est passé), il va (suivant l'implémentation) renvoyer la requête et celle-ci sera traitée deux fois.
+
 Enfin il peut aussi y avoir un problème concernant l'accès aux sections critiques comme dans tout programme concurrentiel. Il faut faire attention à bien protéger les variables lorsque c'est nécessaire pour éviter des problèmes (mais en général ce n'est pas vraiment problématique dans la gestion).
 
 
+## 4.4 Ecriture différée
+*<u>Lorsque l'on implémente l'écriture différée, il arrive que l'on ait soudainement plusieurs transmissions
+en attente qui deviennent possibles simultanément. Comment implémenter proprement cette
+situation (sans réalisation pratique) ? Voici deux possibilités :
+• Effectuer une connexion par transmission différée
+• Multiplexer toutes les connexions vers un même serveur en une seule connexion de transport.
+Dans ce dernier cas, comment implémenter le protocole applicatif, quels avantages peut-on
+espérer de ce multiplexage, et surtout, comment doit-on planifier les réponses du serveur
+lorsque ces dernières s'avèrent nécessaires ?
+Comparer les deux techniques (et éventuellement d'autres que vous pourriez imaginer) et discuter des
+avantages et inconvénients respectifs.</u>*
+
+<u>Connexion par transmission différée (ce que l'on fait dans le laboratoire).</u>
+
+Avantages : 
+- Lorsqu'un problème de connexion avec le serveur est recontré, seul les paquets non reçus seront perdus, les autres seront traités
+- On revoie les réponses au fur et a mesure, le client peut traiter les réponses petit à petit.
+- Implémentation assez simple
+- 
+
+Inconvénients : 
+- On ne peut pas garantir l'ordre d'arrivée des requêtes
+- Si une authentification est demandée par le serveur cela n'est pas vraiment adapté (comme expliqué plus haut).
+- Peut poser problème si le serveur doit gérer un très grand nombre de requêtes
+
+<u>On appelle multiplexage, la capacité à transmettre sur un seul support physique (appelé voie haute vitesse), des données provenant de plusieurs paires d'équipements (émetteurs et récepteurs) ; on parle alors de voies basse vitesse. </u>
+
+Avantages : 
+- Très utile pour le cas où l'on veut envoyer beaucoup de tâches courtes 
+- Permet comme dit dans l'explication du multiplexage ci-dessus de transférer plusieurs requêtes d'un seul coup. Cela implique une seule connexion pour la file d'attente. 
+- Le traitement des requêtes sera fait dans l'ordre d'arrivée.
+- Fiablilité des données plus grande
+
+Inconvénients : 
+- Compliqué car les requêtes vont être fusionnées 
+- Pose problème si la taille des paquets est excessive
+- Peut poser des problèmes si la connexion est régulièrement coupée (ou si c'est lent, car l'emetteur des paquets va attendre longtemps avant de recevoir quelque chose puisqu'une seule connexion est ouverte pour tout traiter) 
+- En cas d'erreurs renvoie toutes les requêtes ce qui peut être lent.
+
+## 4.5 Transmission d’objets
+*<u>a. Quel inconvénient y a-t-il à utiliser une infrastructure de type REST/JSON n'offrant aucun
+service de validation (DTD, XML-schéma, WSDL) par rapport à une infrastructure comme SOAP
+offrant ces possibilités ? Est-ce qu’il y a en revanche des avantages que vous pouvez citer ?</u>*
+
+Inconvénient : On peut recevoir des données malformées avec des champs manquants ou mal renseignés. Le format pourrait ne pas être le bon etc... Il faut pour palier à cela que le serveur qui reçoit ces information détecte d'une façon où d'une autre que les données sont fausses, ou bien il prend le parti de traiter les informations et de renvoyer quelque chose de faux, ou encore il renvoie le message d'erreur qu'aura généré le traitement de mauvaises informations.
+
+Avantage : exécution plus rapide (car pas de temps d'exécution lié à la vérification), et implémentation plus aisée. Plus flexible car on pourra avoir des contenus ne correspondant exactement pas à ce qui est spécifié dans la validation. Cela permettrait d'avoir de l'information supplémentaire inutile dans le cas de l'application mais qui ne serait pas rejeté à cause de la validation.
+
+*<u>b. L’utilisation d’un mécanisme comme Protocol Buffers9 est-elle compatible avec une
+architecture basée sur HTTP ? Veuillez discuter des éventuelles avantages ou limitations par
+rapport à un protocole basé sur JSON ou XML ?</u>*
+
+C'est un moyen de sérialisation des données compatible avec une architecture basée sur HTTP
+
+La conception du Protocol Buffers avait pour objectif la simplicité et la performance avec en-tête d’être plus léger et plus rapide que le XML. 
+Les Protocol Buffers sont très similaires au protocole Apache Thrift (utilisé par Facebook par exemple), sauf que l’implémentation publique du Protocole Buffers ne comprend pas de véritable ensemble de protocoles RPC voué à des services spécifiques. 
+Les messages sont sérialisés sous un format binaire compact, donc contrairement à du JSON ou du XML qui restent lisible pour nous, il est impossible de comprendre un format binaire.
+
+*<u>Par rapport à l’API GraphQL mise à disposition pour ce laboratoire. Avez-vous constaté des
+points qui pourraient être améliorés pour une utilisation mobile ? Veuillez en discuter, vous
+pouvez élargir votre réflexion à une problématique plus large que la manipulation effectuée.</u>*
 
 
 
