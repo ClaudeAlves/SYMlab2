@@ -78,11 +78,11 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
     }
 
     public boolean verifyServerResponse(String response){
-        //String tmp = prepareXML();                                     //Comment to make JSON serialization work
-        Person tmp = gson.fromJson(response, Person.class);                  //Uncomment to make JSON serialization work
+        String tmp = prepareXML();                                          //Comment to make JSON serialization work
+        //Person tmp = gson.fromJson(response, Person.class);               //Uncomment to make JSON serialization work
 
-        //if(response.substring(0,100).equals(tmp.substring(0,100))){   //Comment to make JSON serialization work
-        if(tmp.equals(person)){                                           //Uncomment to make JSON serialization work
+                                                                           //Comment to make JSON serialization work
+        if(tmp.equals(person)){                                          //Uncomment to make JSON serialization work
             Toast.makeText(getApplicationContext(),"Serialization is finished: success",Toast.LENGTH_LONG).show();
             return true;
         }else{
@@ -165,95 +165,16 @@ public class Serialization_json_XML extends AppCompatActivity implements View.On
 
         asynchHandler.setCommunicationEventListener(response -> {
 
+
             verifyServerResponse(response);
             editTextResponse.setVisibility(View.VISIBLE);
             editTextResponse.setText(response);
 
             return true;
         });
-        //asynchHandler.execute(request, url, "application/json");
-        asynchHandler.execute(request, url, "application/xml");
+        //asynchHandler.execute(request, url, "application/json");      //Uncomment to make JSON serialization work
+        asynchHandler.execute(request, url, "application/xml");         //Comment to make JSON serialization work
     }
 }
 
 
-
-/*
-
-package ch.heigvd.iict.sym.lab.comm;
-
-        import android.os.Bundle;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.Toast;
-
-        import androidx.appcompat.app.AppCompatActivity;
-
-        import com.google.gson.Gson;
-        import com.google.gson.GsonBuilder;
-
-        import static java.sql.DriverManager.println;
-
-public class Serialization_json_XML extends AppCompatActivity implements View.OnClickListener {
-
-    private User user;
-
-    private EditText editText
-    private final Gson gson = new GsonBuilder().cUsername, editTextLastname, editTextResponse;
-    private Button buttonLogin;
-reate();
-
-    private final String SERVER_URL_JSON =  "http://sym.iict.ch/rest/json";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_serialization_json__xml);
-
-        //Binding the components with the view
-        editTextFirstname = findViewById(R.id.editTextFirstname);
-        editTextLastname=findViewById(R.id.editTextLastname);
-        editTextResponse=findViewById(R.id.editTextResponse);
-
-        buttonLogin=findViewById(R.id.buttonLogin);
-        buttonLogin.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View view) {
-        if(view == buttonLogin){
-            user = new User(editTextFirstname.getText().toString(), editTextLastname.getText().toString());
-            String serializedUser = gson.toJson(user);
-            sendRequest(serializedUser, SERVER_URL_JSON);
-        }
-    }
-
-    public boolean verifyServerResponse(String response){
-        User tmp = gson.fromJson(response, User.class);
-
-        if(tmp.equals(user)){
-            Toast.makeText(getApplicationContext(),"Serialization is finished: success",Toast.LENGTH_LONG).show();
-            return true;
-        }else{
-            Toast.makeText(getApplicationContext(),"Serialization is finished: failure",Toast.LENGTH_LONG).show();
-            return false;
-        }
-    }
-
-    public void sendRequest(String request, String url){
-        final AsynchRequest asynchHandler = new AsynchRequest();
-
-
-
-        asynchHandler.setCommunicationEventListener(response -> {
-            verifyServerResponse(response);
-            editTextResponse.setVisibility(View.VISIBLE);
-            editTextResponse.setText(response);
-            return true;
-        });
-
-        asynchHandler.execute(request, url, "text/plain");
-    }
-}
-*/

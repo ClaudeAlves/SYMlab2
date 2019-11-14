@@ -17,6 +17,8 @@ import com.google.gson.GsonBuilder;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
@@ -31,7 +33,7 @@ public class Compressed extends AppCompatActivity implements View.OnClickListene
 
     private final Gson gson = new GsonBuilder().create();
 
-    private final String SERVER_URL =  "http://sym.iict.ch/rest/json";
+    private final String SERVER_URL =  "http://sym.iict.ch/rest/txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class Compressed extends AppCompatActivity implements View.OnClickListene
             String data = gson.toJson(user);
 
             try {
-                sendRequest(new String(compress(data)), SERVER_URL);
+                sendRequest((compress(data)), SERVER_URL);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (Exception e) {
@@ -74,19 +76,14 @@ public class Compressed extends AppCompatActivity implements View.OnClickListene
     }
 
     public static String compress(String string) throws Exception {
-        if(string == null) {
-            return "";
-        }
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(string.length() * 2 + 20);
-        DeflaterOutputStream out = new DeflaterOutputStream(byteArrayOutputStream);
-        byte[] byteArray = string.getBytes("UTF8");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Deflater deflater = new Deflater(Deflater.BEST_COMPRESSION, true);
+        DeflaterOutputStream dos = new DeflaterOutputStream(baos, deflater);
+        dos.write(string.getBytes());
+        dos.finish();
 
-        out.write(byteArray);
-        out.finish();
-        out.flush();
-
-        return new String(byteArrayOutputStream.toByteArray());
+        return baos.toByteArray().toString();
     }
 
     public static String decompress(String string) throws Exception {
@@ -136,7 +133,7 @@ public class Compressed extends AppCompatActivity implements View.OnClickListene
 
             return true;
         });
-        asynchHandler.execute(request, url, "application/json");
+        asynchHandler.execute(request, url, "text/plain");
 
     }
 }

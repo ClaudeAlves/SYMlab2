@@ -36,7 +36,13 @@ public class SysCommManager extends AsyncTask<String, String, String> {
         Request.Builder builder = new Request.Builder()
                 .url(params[1]).post(RequestBody.create(MediaType.parse(params[2]),params[0]));
 
+         //-----Uncomment to make compression task-------
+        builder.addHeader("X-Network", "CSD");
+        builder.addHeader("X-Content-Encoding", "deflate");
+        builder.addHeader("Accept", "text/plain");
+        //----------------------------------------------
         builder.addHeader("Content-Type",params[2]);
+
 
         Request request = builder.build();
         try{
